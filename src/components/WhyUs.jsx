@@ -25,7 +25,7 @@ export default function WhyUs() {
           <div>
             <SectionHeading
               align="left"
-              eyebrow="Why BraveEdge Technologies"
+              eyebrow="Why Flintwire Technologies"
               title="Automation partners who sweat the edge cases"
               description="Anyone can wire up a happy path. The value shows up when things go wrong — and that is where we spend our effort."
             />

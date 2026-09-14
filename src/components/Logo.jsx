@@ -1,12 +1,12 @@
 /**
- * BraveEdge wordmark.
+ * Flintwire wordmark.
  *
- * The mark is a forward chevron with an accent bar — "edge" plus momentum.
+ * The mark is a forward chevron with an accent bar — forward motion.
  *
- * The name is set in two related brand colours: "Brave" in brand blue and
- * "Edge" in the teal accent, matching the blue-to-teal pairing already used by
+ * The name is set in two related brand colours: "Flint" in brand blue and
+ * "wire" in the teal accent, matching the blue-to-teal pairing already used by
  * the mark and the scroll progress bar. The two halves sit in adjacent spans
- * with no space, so they read as the single word "BraveEdge" while still
+ * with no space, so they read as the single word "Flintwire" while still
  * giving each half its own colour.
  *
  * Shade choice is deliberate, not decorative: on white, `teal-700` is the only
@@ -31,11 +31,11 @@ const scaleBySize = {
 
 export default function Logo({ variant = 'dark', size = 'md', className = '' }) {
   const isLight = variant === 'light';
-  const gradientId = `be-mark-${variant}`;
+  const gradientId = `fw-mark-${variant}`;
   const scale = scaleBySize[size] || scaleBySize.md;
 
-  const braveColor = isLight ? 'text-brand-300' : 'text-brand-600';
-  const edgeColor = isLight ? 'text-teal-400' : 'text-teal-700';
+  const flintColor = isLight ? 'text-brand-300' : 'text-brand-600';
+  const wireColor = isLight ? 'text-teal-400' : 'text-teal-700';
 
   return (
     <span className={`inline-flex items-center gap-2 sm:gap-2.5 ${className}`}>
@@ -59,8 +59,8 @@ export default function Logo({ variant = 'dark', size = 'md', className = '' }) 
       </svg>
 
       <span className={`font-display font-extrabold leading-none tracking-tight ${scale.text}`}>
-        <span className={braveColor}>Brave</span>
-        <span className={edgeColor}>Edge</span>
+        <span className={flintColor}>Flint</span>
+        <span className={wireColor}>wire</span>
       </span>
     </span>
   );

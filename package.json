@@ -1,9 +1,9 @@
 {
-  "name": "braveedge-website",
+  "name": "flintwire-website",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Marketing website for BraveEdge Technologies — an automation agency.",
+  "description": "Marketing website for Flintwire Technologies — an automation agency.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

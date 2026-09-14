@@ -1,6 +1,6 @@
-# BraveEdge Technologies — website
+# Flintwire Technologies — website
 
-Marketing site for BraveEdge Technologies, an automation agency. Static, single
+Marketing site for Flintwire Technologies, an automation agency. Static, single
 page, no backend required.
 
 Built with **Vite + React + Tailwind CSS**. `npm run build` produces a plain
@@ -182,7 +182,7 @@ Notes:
 - [ ] Set the real domain: `VITE_SITE_URL`, or edit `company.url` plus the
       `canonical`/`og:url` tags in `index.html`, and `public/robots.txt`.
 - [ ] Update `company.email` and `company.phone` in `src/data/site.js` — the
-      placeholders are `hello@braveedge.tech` and `+1 (000) 000-0000`. A real
+      placeholders are `hello@flintwire.com` and `+1 (000) 000-0000`. A real
       phone number is added to structured data automatically.
 - [ ] Add a social share image: drop a 1200×630 `og.png` into `public/` and add
       `<meta property="og:image" content="/og.png" />` to `index.html`.
@@ -244,15 +244,18 @@ braveedge/
 ## Notes
 
 - **Branding**: the wordmark in `src/components/Logo.jsx` is the two-tone
-  `BraveEdge` — "Brave" in brand blue, "Edge" in the teal accent, matching the
+  `Flintwire` — "Flint" in brand blue, "wire" in the teal accent, matching the
   blue-to-teal pairing used by the mark and the scroll progress bar. Colours
   differ per variant: `brand-600`/`teal-700` on light, `brand-300`/`teal-400` on
   dark. `teal-700` is the only teal dark enough to stay legible at wordmark size
   on white.
-- **Company name**: since the visible wordmark is just "BraveEdge", the complete
-  name (`BraveEdge Technologies`) is carried by the page title, `og:` tags,
-  footer copyright and blurb, structured data, the "Why BraveEdge Technologies"
+- **Company name**: since the visible wordmark is just "Flintwire", the complete
+  name (`Flintwire Technologies`) is carried by the page title, `og:` tags,
+  footer copyright and blurb, structured data, the "Why Flintwire Technologies"
   eyebrow, and the header home link's accessible name.
+- **Naming**: the project folder and the GitHub repository are still named
+  `braveedge` from before the rebrand. Renaming them is safe — the site itself
+  does not depend on either name.
 - **Header layout**: the inline nav appears at `lg` (1024px+), with the
   redundant "Product access" shortcut only at `xl`. Below `lg` everything moves
   into the hamburger menu.

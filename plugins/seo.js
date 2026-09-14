@@ -117,7 +117,7 @@ export default function seo({ env = {} } = {}) {
   }
 
   return {
-    name: 'braveedge-seo',
+    name: 'flintwire-seo',
 
     async configResolved(config) {
       outDir = config.build.outDir;
@@ -129,8 +129,8 @@ export default function seo({ env = {} } = {}) {
     transformIndexHtml(html) {
       // Keep canonical/og:url in sync when a custom domain is configured.
       let output = html;
-      if (siteUrl && !siteUrl.includes('braveedge.tech')) {
-        output = output.split('https://braveedge.tech').join(siteUrl);
+      if (siteUrl && !siteUrl.includes('flintwire.com')) {
+        output = output.split('https://flintwire.com').join(siteUrl);
       }
 
       return {
@@ -167,7 +167,7 @@ export default function seo({ env = {} } = {}) {
 
       const notFound = fs
         .readFileSync(indexPath, 'utf8')
-        .replace(/<title>[\s\S]*?<\/title>/, '<title>Page not found — BraveEdge Technologies</title>')
+        .replace(/<title>[\s\S]*?<\/title>/, '<title>Page not found — Flintwire Technologies</title>')
         .replace('</head>', '    <meta name="robots" content="noindex, follow" />\n  </head>');
 
       fs.writeFileSync(path.resolve(outDir, '404.html'), notFound);

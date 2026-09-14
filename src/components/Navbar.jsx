@@ -6,7 +6,7 @@ import { company, nav } from '../data/site.js';
 /**
  * Sticky header.
  *
- * The visible wordmark is just "BraveEdge", so the home link carries an
+ * The visible wordmark is just "Flintwire", so the home link carries an
  * accessible name with the complete company name — screen reader users still
  * get the full trading name, and the visible label is contained within it
  * (WCAG 2.5.3).

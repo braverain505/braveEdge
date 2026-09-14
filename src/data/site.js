@@ -1,21 +1,21 @@
 /**
  * ---------------------------------------------------------------------------
- * BraveEdge Technologies — site content
+ * Flintwire Technologies — site content
  * ---------------------------------------------------------------------------
  * This is the only file you need to touch for day-to-day content updates.
  * Product access links live in `products` below.
  */
 
 export const company = {
-  name: 'BraveEdge Technologies',
-  shortName: 'BraveEdge',
+  name: 'Flintwire Technologies',
+  shortName: 'Flintwire',
   // Used in the navbar, hero and footer.
   tagline: 'Automation that gives your business an edge.',
-  email: 'hello@braveedge.tech',
+  email: 'hello@flintwire.com',
   phone: '+1 (000) 000-0000',
   location: 'Remote-first · Serving clients worldwide',
   // Update this once the production domain is live.
-  url: 'https://braveedge.tech',
+  url: 'https://flintwire.com',
   // Shown as the organization description in structured data.
   schemaDescription:
     'Automation agency building workflow automation, AI assistants, systems integrations and internal tools for growing teams.',
@@ -34,7 +34,7 @@ export const hero = {
   eyebrow: 'Automation agency',
   title: 'We build the automation your team keeps doing by hand.',
   subtitle:
-    'BraveEdge Technologies designs, builds and runs the systems that remove manual work from your operations — so your people spend their time on decisions, not data entry.',
+    'Flintwire Technologies designs, builds and runs the systems that remove manual work from your operations — so your people spend their time on decisions, not data entry.',
   primaryCta: { label: 'Book a discovery call', href: '#contact' },
   secondaryCta: { label: 'See our products', href: '#products' },
 };
@@ -267,7 +267,7 @@ export const contact = {
 
 export const footer = {
   blurb:
-    'BraveEdge Technologies is an automation studio building workflow automation, AI assistants and internal tools for growing teams.',
+    'Flintwire Technologies is an automation studio building workflow automation, AI assistants and internal tools for growing teams.',
   columns: [
     {
       title: 'Services',
