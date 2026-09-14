@@ -1,29 +1,31 @@
 /**
- * BraveEdge Technologies lockup.
+ * BraveEdge wordmark.
  *
- * The mark is a forward chevron with an accent bar — "edge" plus momentum. The
- * wordmark always renders the *complete* company name on one line, with
- * "Technologies" set slightly smaller and lighter as part of the same lockup,
- * rather than as a tagline beneath the name.
+ * The mark is a forward chevron with an accent bar — "edge" plus momentum.
  *
- * The space between the two words is a real text node, so the accessible name
- * and any copy-paste both read "BraveEdge Technologies".
+ * The name is set in two related brand colours: "Brave" in brand blue and
+ * "Edge" in the teal accent, matching the blue-to-teal pairing already used by
+ * the mark and the scroll progress bar. The two halves sit in adjacent spans
+ * with no space, so they read as the single word "BraveEdge" while still
+ * giving each half its own colour.
+ *
+ * Shade choice is deliberate, not decorative: on white, `teal-700` is the only
+ * teal light enough to look right and dark enough to stay legible (teal-600
+ * fails contrast at this text size); on dark, the lighter `brand-300` and
+ * `teal-400` are used instead.
  */
 const scaleBySize = {
   sm: {
-    mark: 'h-8 w-8',
-    primary: 'text-[0.875rem]',
-    secondary: 'text-[0.75rem]',
+    mark: 'h-7 w-7',
+    text: 'text-[0.9375rem]',
   },
   md: {
     mark: 'h-8 w-8 sm:h-9 sm:w-9',
-    primary: 'text-[0.9375rem] sm:text-[1.0625rem]',
-    secondary: 'text-[0.75rem] sm:text-[0.9375rem]',
+    text: 'text-[1.0625rem] sm:text-[1.1875rem]',
   },
   lg: {
     mark: 'h-11 w-11',
-    primary: 'text-[1.25rem]',
-    secondary: 'text-[1.0625rem]',
+    text: 'text-[1.5rem]',
   },
 };
 
@@ -31,6 +33,9 @@ export default function Logo({ variant = 'dark', size = 'md', className = '' }) 
   const isLight = variant === 'light';
   const gradientId = `be-mark-${variant}`;
   const scale = scaleBySize[size] || scaleBySize.md;
+
+  const braveColor = isLight ? 'text-brand-300' : 'text-brand-600';
+  const edgeColor = isLight ? 'text-teal-400' : 'text-teal-700';
 
   return (
     <span className={`inline-flex items-center gap-2 sm:gap-2.5 ${className}`}>
@@ -53,15 +58,9 @@ export default function Logo({ variant = 'dark', size = 'md', className = '' }) 
         <path d="M19 22.5h3.2" fill="none" stroke="#90b0ff" strokeWidth="2.6" strokeLinecap="round" />
       </svg>
 
-      <span
-        className={`font-display font-extrabold leading-none tracking-tight ${
-          isLight ? 'text-white' : 'text-ink-900'
-        }`}
-      >
-        <span className={scale.primary}>BraveEdge</span>{' '}
-        <span className={`font-semibold ${scale.secondary} ${isLight ? 'text-ink-200/75' : 'text-ink-500'}`}>
-          Technologies
-        </span>
+      <span className={`font-display font-extrabold leading-none tracking-tight ${scale.text}`}>
+        <span className={braveColor}>Brave</span>
+        <span className={edgeColor}>Edge</span>
       </span>
     </span>
   );

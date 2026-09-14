@@ -32,10 +32,13 @@ export default {
           900: '#1a2987',
         },
         // Muted teal — small highlights only, keeps the palette restrained.
+        // 700 is used for the "Edge" half of the wordmark: it is the only shade
+        // dark enough to stay readable behind small bold text on white.
         teal: {
           400: '#2dd4bf',
           500: '#14b8a6',
           600: '#0d9488',
+          700: '#0f766e',
         },
       },
       fontFamily: {

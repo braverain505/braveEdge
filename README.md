@@ -243,11 +243,19 @@ braveedge/
 
 ## Notes
 
-- **Branding**: the wordmark in `src/components/Logo.jsx` always renders the
-  complete company name (`BraveEdge Technologies`) on one line — "Technologies"
-  is part of the lockup, not a tagline. Because that needs horizontal room, the
-  inline desktop nav appears at the `xl` breakpoint and collapses into the
-  hamburger menu below it.
+- **Branding**: the wordmark in `src/components/Logo.jsx` is the two-tone
+  `BraveEdge` — "Brave" in brand blue, "Edge" in the teal accent, matching the
+  blue-to-teal pairing used by the mark and the scroll progress bar. Colours
+  differ per variant: `brand-600`/`teal-700` on light, `brand-300`/`teal-400` on
+  dark. `teal-700` is the only teal dark enough to stay legible at wordmark size
+  on white.
+- **Company name**: since the visible wordmark is just "BraveEdge", the complete
+  name (`BraveEdge Technologies`) is carried by the page title, `og:` tags,
+  footer copyright and blurb, structured data, the "Why BraveEdge Technologies"
+  eyebrow, and the header home link's accessible name.
+- **Header layout**: the inline nav appears at `lg` (1024px+), with the
+  redundant "Product access" shortcut only at `xl`. Below `lg` everything moves
+  into the hamburger menu.
 - **Typography** is self-hosted via `@fontsource` (imported in `src/main.jsx`), so
   the page makes no third-party requests and needs no cookie banner.
 - **Accessibility**: keyboard focus rings, semantic landmarks, `aria` labels on

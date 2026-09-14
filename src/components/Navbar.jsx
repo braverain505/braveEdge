@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react';
 import Logo from './Logo.jsx';
 import Icon from './Icons.jsx';
-import { nav } from '../data/site.js';
+import { company, nav } from '../data/site.js';
 
 /**
  * Sticky header.
  *
- * The full "BraveEdge Technologies" wordmark needs real horizontal room, so the
- * inline nav only appears at `xl`. Below that the same links live in the
- * hamburger menu rather than being squeezed or truncated.
+ * The visible wordmark is just "BraveEdge", so the home link carries an
+ * accessible name with the complete company name — screen reader users still
+ * get the full trading name, and the visible label is contained within it
+ * (WCAG 2.5.3).
+ *
+ * The redundant "Product access" shortcut only appears at `xl`, where there is
+ * room; the Products link in the nav covers the same destination below that.
  */
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -37,26 +41,31 @@ export default function Navbar() {
     >
       <div className="container-x">
         <div className="flex h-[4.5rem] items-center justify-between gap-4">
-          <a href="#top" className="shrink-0" onClick={() => setOpen(false)}>
+          <a
+            href="#top"
+            className="shrink-0"
+            onClick={() => setOpen(false)}
+            aria-label={`${company.name} — home`}
+          >
             <Logo />
           </a>
 
-          <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Main">
+          <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Main">
             {nav.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="rounded-full px-2.5 py-2 text-sm font-medium text-ink-600 transition hover:bg-ink-900/5 hover:text-ink-900"
+                className="rounded-full px-3 py-2 text-sm font-medium text-ink-600 transition hover:bg-ink-900/5 hover:text-ink-900"
               >
                 {item.label}
               </a>
             ))}
           </nav>
 
-          <div className="hidden items-center gap-3 xl:flex">
+          <div className="hidden items-center gap-3 lg:flex">
             <a
               href="#products"
-              className="whitespace-nowrap text-sm font-semibold text-ink-700 transition hover:text-ink-900"
+              className="hidden whitespace-nowrap text-sm font-semibold text-ink-700 transition hover:text-ink-900 xl:inline-flex"
             >
               Product access
             </a>
@@ -68,7 +77,7 @@ export default function Navbar() {
 
           <button
             type="button"
-            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ink-900/10 bg-white text-ink-800 shadow-soft xl:hidden"
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ink-900/10 bg-white text-ink-800 shadow-soft lg:hidden"
             onClick={() => setOpen((value) => !value)}
             aria-expanded={open}
             aria-label={open ? 'Close menu' : 'Open menu'}
@@ -79,7 +88,7 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="border-t border-ink-900/10 bg-white xl:hidden">
+        <div className="border-t border-ink-900/10 bg-white lg:hidden">
           <div className="container-x py-5">
             <nav className="flex flex-col" aria-label="Mobile">
               {nav.map((item) => (
