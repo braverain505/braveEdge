@@ -16,8 +16,6 @@ export const company = {
   location: 'Remote-first · Serving clients worldwide',
   // Update this once the production domain is live.
   url: 'https://braveedge.tech',
-  // Used by the ROI calculator to format money.
-  currency: 'USD',
   // Shown as the organization description in structured data.
   schemaDescription:
     'Automation agency building workflow automation, AI assistants, systems integrations and internal tools for growing teams.',
@@ -180,15 +178,18 @@ export const differentiators = [
 ];
 
 /**
- * ROI CALCULATOR
+ * TIME-SAVED CALCULATOR
  * ---------------------------------------------------------------------------
- * Every figure the calculator shows is derived from the visitor's own inputs.
- * `assumptions` are deliberately conservative — adjust them here if you want
- * to make the estimate more or less bullish.
+ * Reports time only — deliberately no money figures, so nothing on the site
+ * implies a savings claim or a price.
+ *
+ * Every figure shown is derived from the visitor's own inputs, and
+ * `assumptions` are conservative — adjust them here if you want to make the
+ * estimate more or less bullish.
  */
 export const roi = {
   eyebrow: 'Estimate',
-  title: 'What is the manual work actually costing you?',
+  title: 'How much of your week goes into manual work?',
   description:
     'Move the sliders to match your team. We assume only part of repetitive work can be automated, so treat the result as a floor rather than a promise.',
   assumptions: {
@@ -198,12 +199,13 @@ export const roi = {
     workingWeeks: 46,
     // Full-time hours per week, used to express savings as "weeks freed".
     hoursPerWeek: 40,
+    // Length of a working day, used to express savings in days.
+    hoursPerDay: 8,
   },
-  defaults: { people: 3, hours: 8, cost: 35 },
+  defaults: { people: 3, hours: 8 },
   limits: {
     people: { min: 1, max: 25, step: 1 },
     hours: { min: 1, max: 40, step: 1 },
-    cost: { min: 10, max: 150, step: 5 },
   },
 };
 

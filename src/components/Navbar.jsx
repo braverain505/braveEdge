@@ -3,6 +3,13 @@ import Logo from './Logo.jsx';
 import Icon from './Icons.jsx';
 import { nav } from '../data/site.js';
 
+/**
+ * Sticky header.
+ *
+ * The full "BraveEdge Technologies" wordmark needs real horizontal room, so the
+ * inline nav only appears at `xl`. Below that the same links live in the
+ * hamburger menu rather than being squeezed or truncated.
+ */
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -29,29 +36,31 @@ export default function Navbar() {
       }`}
     >
       <div className="container-x">
-        <div className="flex h-[4.5rem] items-center justify-between gap-6">
+        <div className="flex h-[4.5rem] items-center justify-between gap-4">
           <a href="#top" className="shrink-0" onClick={() => setOpen(false)}>
             <Logo />
-            <span className="sr-only">BraveEdge Technologies — home</span>
           </a>
 
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
+          <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Main">
             {nav.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="rounded-full px-4 py-2 text-sm font-medium text-ink-600 transition hover:bg-ink-900/5 hover:text-ink-900"
+                className="rounded-full px-2.5 py-2 text-sm font-medium text-ink-600 transition hover:bg-ink-900/5 hover:text-ink-900"
               >
                 {item.label}
               </a>
             ))}
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
-            <a href="#products" className="text-sm font-semibold text-ink-700 transition hover:text-ink-900">
-              Client &amp; product access
+          <div className="hidden items-center gap-3 xl:flex">
+            <a
+              href="#products"
+              className="whitespace-nowrap text-sm font-semibold text-ink-700 transition hover:text-ink-900"
+            >
+              Product access
             </a>
-            <a href="#contact" className="btn-accent btn-lg">
+            <a href="#contact" className="btn-accent btn-lg whitespace-nowrap">
               Book a call
               <Icon name="arrowRight" className="h-4 w-4" strokeWidth={2} />
             </a>
@@ -59,7 +68,7 @@ export default function Navbar() {
 
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-ink-900/10 bg-white text-ink-800 shadow-soft lg:hidden"
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ink-900/10 bg-white text-ink-800 shadow-soft xl:hidden"
             onClick={() => setOpen((value) => !value)}
             aria-expanded={open}
             aria-label={open ? 'Close menu' : 'Open menu'}
@@ -70,7 +79,7 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="border-t border-ink-900/10 bg-white lg:hidden">
+        <div className="border-t border-ink-900/10 bg-white xl:hidden">
           <div className="container-x py-5">
             <nav className="flex flex-col" aria-label="Mobile">
               {nav.map((item) => (
@@ -83,6 +92,13 @@ export default function Navbar() {
                   {item.label}
                 </a>
               ))}
+              <a
+                href="#products"
+                onClick={() => setOpen(false)}
+                className="border-b border-ink-900/5 py-3.5 text-[0.9375rem] font-semibold text-brand-700"
+              >
+                Product access
+              </a>
             </nav>
             <a href="#contact" onClick={() => setOpen(false)} className="btn-accent btn-lg mt-5 w-full">
               Book a discovery call

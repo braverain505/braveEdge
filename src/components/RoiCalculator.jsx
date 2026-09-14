@@ -2,14 +2,8 @@ import { useMemo, useState } from 'react';
 import Icon from './Icons.jsx';
 import Reveal from './Reveal.jsx';
 import SectionHeading from './SectionHeading.jsx';
-import { company, roi } from '../data/site.js';
+import { roi } from '../data/site.js';
 import { track } from '../lib/analytics.js';
-
-const money = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: company.currency,
-  maximumFractionDigits: 0,
-});
 
 const count = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
 
@@ -48,9 +42,8 @@ function Slider({ id, label, hint, value, onChange, limits, format }) {
 export default function RoiCalculator({ onSendEstimate }) {
   const [people, setPeople] = useState(roi.defaults.people);
   const [hours, setHours] = useState(roi.defaults.hours);
-  const [cost, setCost] = useState(roi.defaults.cost);
 
-  const { automatableShare, workingWeeks, hoursPerWeek } = roi.assumptions;
+  const { automatableShare, workingWeeks, hoursPerWeek, hoursPerDay } = roi.assumptions;
 
   const result = useMemo(() => {
     const weeklyHours = people * hours * automatableShare;
@@ -58,31 +51,30 @@ export default function RoiCalculator({ onSendEstimate }) {
     return {
       weeklyHours,
       annualHours,
-      annualValue: annualHours * cost,
+      daysFreed: annualHours / hoursPerDay,
       weeksFreed: annualHours / hoursPerWeek,
     };
-  }, [people, hours, cost, automatableShare, workingWeeks, hoursPerWeek]);
+  }, [people, hours, automatableShare, workingWeeks, hoursPerWeek, hoursPerDay]);
 
   const handleSend = () => {
     const lines = [
       'Estimate from the website calculator:',
       `• People doing the repetitive work: ${people}`,
       `• Repetitive hours per person per week: ${hours}`,
-      `• Assumed fully-loaded hourly cost: ${money.format(cost)}`,
       `• Hours recovered per year: ${count.format(Math.round(result.annualHours))}`,
-      `• Estimated annual value: ${money.format(result.annualValue)}`,
+      `• Working days freed per year: ${count.format(Math.round(result.daysFreed))}`,
       '',
       `This assumes ${Math.round(automatableShare * 100)}% of the repetitive time entered can be automated, across ${workingWeeks} working weeks.`,
       'Assuming that is roughly right, here is the process I would like to automate:',
     ];
 
-    track('roi_estimate_requested', { people, hours, cost });
+    track('roi_estimate_requested', { people, hours });
     onSendEstimate(lines.join('\n'));
   };
 
   const stats = [
     { label: 'Hours back each week', value: `${count.format(Math.round(result.weeklyHours))} hrs` },
-    { label: 'Hours back each year', value: count.format(Math.round(result.annualHours)) },
+    { label: 'Working days freed each year', value: `${count.format(Math.round(result.daysFreed))} days` },
     { label: 'Weeks of work freed', value: `${result.weeksFreed.toFixed(1)} wks` },
   ];
 
@@ -114,15 +106,6 @@ export default function RoiCalculator({ onSendEstimate }) {
                   limits={roi.limits.hours}
                   format={(value) => `${value} hrs`}
                 />
-                <Slider
-                  id="roi-cost"
-                  label="Fully-loaded hourly cost"
-                  hint="Salary plus overhead"
-                  value={cost}
-                  onChange={setCost}
-                  limits={roi.limits.cost}
-                  format={(value) => money.format(value)}
-                />
               </div>
 
               <p className="mt-8 flex items-start gap-2.5 border-t border-ink-900/10 pt-6 text-[0.75rem] leading-relaxed text-ink-400">
@@ -139,14 +122,18 @@ export default function RoiCalculator({ onSendEstimate }) {
                 className="pointer-events-none absolute inset-0 bg-grid-dark bg-grid [mask-image:radial-gradient(ellipse_80%_60%_at_100%_0%,black,transparent)]"
                 aria-hidden="true"
               />
-              <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-brand-500/25 blur-[90px]" aria-hidden="true" />
+              <div
+                className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-brand-500/25 blur-[90px]"
+                aria-hidden="true"
+              />
 
               <div className="relative">
                 <p className="text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-ink-300/70">
-                  Estimated annual value recovered
+                  Hours recovered every year
                 </p>
                 <p className="mt-3 font-display text-4xl font-extrabold tabular-nums text-white sm:text-[3.25rem] sm:leading-none">
-                  {money.format(result.annualValue)}
+                  {count.format(Math.round(result.annualHours))}
+                  <span className="ml-2 text-xl font-bold text-ink-300/70">hrs</span>
                 </p>
 
                 <dl className="mt-8 space-y-3 border-t border-white/10 pt-7">
@@ -164,9 +151,9 @@ export default function RoiCalculator({ onSendEstimate }) {
                 </button>
 
                 <p className="mt-4 text-[0.75rem] leading-relaxed text-ink-300/60">
-                  This is an estimate, not a quote. It assumes {Math.round(automatableShare * 100)}% of the repetitive
-                  time you entered can be automated — we validate that against a real process map before quoting
-                  anything.
+                  This is an estimate, not a promise. It assumes {Math.round(automatableShare * 100)}% of the
+                  repetitive time you entered can be automated — we validate that against a real process map before
+                  committing to anything.
                 </p>
               </div>
             </div>

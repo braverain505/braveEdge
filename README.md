@@ -27,7 +27,7 @@ Almost everything lives in **one file**: `src/data/site.js`.
 
 | What you want to change | Where |
 | --- | --- |
-| Company name, email, phone, location, domain, currency | `company` |
+| Company name, email, phone, location, domain | `company` |
 | Navbar links | `nav` |
 | Hero headline, subtitle, buttons | `hero` |
 | The four statements under the hero | `valueProps` |
@@ -35,7 +35,7 @@ Almost everything lives in **one file**: `src/data/site.js`.
 | Product access links | `products` |
 | The four process steps | `process` |
 | "Why us" points | `differentiators` |
-| ROI calculator copy, defaults and assumptions | `roi` |
+| Calculator copy, defaults and assumptions | `roi` |
 | FAQ questions and answers | `faqs` |
 | Contact copy | `contact` |
 | Footer copy and link columns | `footer` |
@@ -69,11 +69,17 @@ export const products = [
 
 ---
 
-## ROI calculator
+## Time-saved calculator
 
-`#calculator` asks visitors for three numbers — people, weekly repetitive hours
-per person, and fully-loaded hourly cost — and estimates the hours and money
-that automation could recover.
+`#calculator` asks visitors for two numbers — how many people touch the process,
+and how many repetitive hours each of them spends on it per week — and reports
+how much time automation could recover per week, per year, in working days and
+in weeks.
+
+**It reports time only.** There are deliberately no money figures anywhere in the
+calculator, so the site never implies a savings claim or a price. If you ever
+want monetary output back, you would need to reintroduce a rate input and an
+`Intl.NumberFormat` currency formatter in `src/components/RoiCalculator.jsx`.
 
 Everything is calculated in the browser; nothing is sent anywhere until the
 visitor presses **Send me this estimate**, which drops the figures into the
@@ -86,6 +92,7 @@ The assumptions live in `roi.assumptions` in `src/data/site.js`:
 | `automatableShare` | `0.7` | Share of the time entered assumed automatable |
 | `workingWeeks` | `46` | Paid weeks per year (allows for holidays) |
 | `hoursPerWeek` | `40` | Used to express savings as "weeks freed" |
+| `hoursPerDay` | `8` | Length of a working day, used for "days freed" |
 
 The displayed estimate deliberately states these assumptions next to the result,
 so a visitor is never shown a number without its basis.
@@ -236,6 +243,11 @@ braveedge/
 
 ## Notes
 
+- **Branding**: the wordmark in `src/components/Logo.jsx` always renders the
+  complete company name (`BraveEdge Technologies`) on one line — "Technologies"
+  is part of the lockup, not a tagline. Because that needs horizontal room, the
+  inline desktop nav appears at the `xl` breakpoint and collapses into the
+  hamburger menu below it.
 - **Typography** is self-hosted via `@fontsource` (imported in `src/main.jsx`), so
   the page makes no third-party requests and needs no cookie banner.
 - **Accessibility**: keyboard focus rings, semantic landmarks, `aria` labels on
