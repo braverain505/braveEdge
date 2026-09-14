@@ -1,0 +1,211 @@
+/**
+ * ---------------------------------------------------------------------------
+ * BraveEdge Technologies — site content
+ * ---------------------------------------------------------------------------
+ * This is the only file you need to touch for day-to-day content updates.
+ * Product access links live in `products` below.
+ */
+
+export const company = {
+  name: 'BraveEdge Technologies',
+  shortName: 'BraveEdge',
+  // Used in the navbar, hero and footer.
+  tagline: 'Automation that gives your business an edge.',
+  email: 'hello@braveedge.tech',
+  phone: '+1 (000) 000-0000',
+  location: 'Remote-first · Serving clients worldwide',
+  // Update this once the production domain is live.
+  url: 'https://braveedge.tech',
+};
+
+export const nav = [
+  { label: 'Services', href: '#services' },
+  { label: 'Products', href: '#products' },
+  { label: 'How we work', href: '#process' },
+  { label: 'Why us', href: '#why' },
+  { label: 'Contact', href: '#contact' },
+];
+
+export const hero = {
+  eyebrow: 'Automation agency',
+  title: 'We build the automation your team keeps doing by hand.',
+  subtitle:
+    'BraveEdge Technologies designs, builds and runs the systems that remove manual work from your operations — so your people spend their time on decisions, not data entry.',
+  primaryCta: { label: 'Book a discovery call', href: '#contact' },
+  secondaryCta: { label: 'See our products', href: '#products' },
+};
+
+/** Short value statements under the hero. Keep these honest and specific. */
+export const valueProps = [
+  {
+    title: 'Fixed scope, fixed price',
+    description: 'You know the deliverable and the cost before we start building.',
+  },
+  {
+    title: 'You own everything',
+    description: 'Code, workflows and credentials are handed over on day one.',
+  },
+  {
+    title: 'Senior engineers only',
+    description: 'The people who scope your build are the people who ship it.',
+  },
+  {
+    title: 'Live in weeks, not quarters',
+    description: 'We ship working automations early, then extend them iteratively.',
+  },
+];
+
+export const services = [
+  {
+    icon: 'flow',
+    title: 'Workflow automation',
+    description:
+      'We map the process your team runs manually today, then automate the handoffs, approvals and follow-ups end to end.',
+  },
+  {
+    icon: 'spark',
+    title: 'AI assistants & agents',
+    description:
+      'Custom assistants trained on your documents and systems — answering customers, triaging tickets and drafting work for review.',
+  },
+  {
+    icon: 'plug',
+    title: 'Systems integration',
+    description:
+      'Your CRM, finance stack, ticketing and internal databases talking to each other, with one source of truth instead of five.',
+  },
+  {
+    icon: 'chart',
+    title: 'Data & reporting',
+    description:
+      'Automated pipelines that clean, reconcile and deliver your numbers to a dashboard before anyone asks for them.',
+  },
+  {
+    icon: 'window',
+    title: 'Internal tools',
+    description:
+      'Purpose-built portals and admin dashboards that replace the spreadsheet-and-email workflow nobody wants to maintain.',
+  },
+  {
+    icon: 'shield',
+    title: 'Managed automation',
+    description:
+      'Monitoring, maintenance and iteration after launch — because processes change and broken automations are worse than none.',
+  },
+];
+
+/**
+ * PRODUCTS
+ * ---------------------------------------------------------------------------
+ * Each entry renders a card with an "Open" link. To add a product, copy an
+ * object below and edit the fields. Set `status` to 'live' or 'soon'.
+ * `url` may be null for products that are not publicly accessible yet.
+ */
+export const products = [
+  {
+    name: 'Clearis',
+    status: 'live',
+    tag: 'Platform',
+    url: 'https://clearis.site',
+    description:
+      'Our flagship platform. Clearis brings the workflows we build for clients into a single, self-serve workspace.',
+  },
+  // {
+  //   name: 'Next product',
+  //   status: 'live',
+  //   tag: 'Internal tool',
+  //   url: 'https://example.com',
+  //   description: 'One-line description of what it does and who it is for.',
+  // },
+];
+
+export const process = [
+  {
+    step: '01',
+    title: 'Discover',
+    description:
+      'A short working session to map the process, the tools involved and where the hours actually go.',
+    detail: 'Deliverable: process map + automation opportunities ranked by payback.',
+  },
+  {
+    step: '02',
+    title: 'Design',
+    description:
+      'We agree the scope, the systems we will touch and how success gets measured — in writing.',
+    detail: 'Deliverable: solution design, fixed quote and delivery timeline.',
+  },
+  {
+    step: '03',
+    title: 'Build',
+    description:
+      'We build in short cycles against your real data, so you see working software rather than status updates.',
+    detail: 'Deliverable: a working automation in your environment, tested end to end.',
+  },
+  {
+    step: '04',
+    title: 'Run & extend',
+    description:
+      'We monitor what we shipped, fix what breaks and extend it as your process evolves.',
+    detail: 'Deliverable: documentation, handover session and optional ongoing support.',
+  },
+];
+
+export const differentiators = [
+  {
+    title: 'Process first, tools second',
+    description:
+      'We will not automate a process that should be deleted. The audit comes before the build, every time.',
+  },
+  {
+    title: 'No black boxes',
+    description:
+      'Everything we build is documented and readable by your team. No platform lock-in you cannot walk away from.',
+  },
+  {
+    title: 'Built for the unglamorous edge cases',
+    description:
+      'The failed payment, the missing field, the duplicate record. That is where automations actually earn their keep.',
+  },
+  {
+    title: 'Security-conscious by default',
+    description:
+      'Least-privilege access, secrets handled properly, and your data staying inside systems you control.',
+  },
+];
+
+export const contact = {
+  heading: 'Tell us what your team does manually.',
+  description:
+    'Send over the process that costs you the most time. We will reply with an honest read on whether it is worth automating, and what it would take.',
+  responseTime: 'We reply within one business day.',
+  /**
+   * Optional: set VITE_CONTACT_ENDPOINT in a .env file to POST form
+   * submissions to a form service. With no endpoint set, the form opens the
+   * visitor's mail client instead — which needs no backend at all.
+   */
+};
+
+export const footer = {
+  blurb:
+    'BraveEdge Technologies is an automation studio building workflow automation, AI assistants and internal tools for growing teams.',
+  columns: [
+    {
+      title: 'Services',
+      links: [
+        { label: 'Workflow automation', href: '#services' },
+        { label: 'AI assistants', href: '#services' },
+        { label: 'Systems integration', href: '#services' },
+        { label: 'Internal tools', href: '#services' },
+      ],
+    },
+    {
+      title: 'Company',
+      links: [
+        { label: 'How we work', href: '#process' },
+        { label: 'Why us', href: '#why' },
+        { label: 'Products', href: '#products' },
+        { label: 'Contact', href: '#contact' },
+      ],
+    },
+  ],
+};
