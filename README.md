@@ -208,7 +208,7 @@ Whatever you choose, make sure the site is served over HTTPS.
 ## Project structure
 
 ```
-braveedge/
+flintwire/
 ├── index.html              # HTML shell, SEO meta (structured data is injected at build)
 ├── vite.config.js          # Vite + SEO plugin wiring
 ├── tailwind.config.js      # brand colours, fonts, shadows, animations
@@ -218,6 +218,7 @@ braveedge/
     ├── main.jsx            # entry point + self-hosted font imports
     ├── App.jsx             # section order + contact-form draft state
     ├── index.css           # Tailwind layers, button/card/eyebrow classes
+    ├── assets/flintwire.png # brand lockup (mark + wordmark)
     ├── data/site.js        # ← all page content, product links, FAQ, ROI config
     ├── lib/analytics.js    # provider-agnostic event tracking
     └── components/
@@ -237,25 +238,31 @@ braveedge/
         ├── BackToTop.jsx
         ├── Reveal.jsx          # scroll-in animation wrapper
         ├── SectionHeading.jsx  # shared section header
-        ├── Logo.jsx            # wordmark
+        ├── Logo.jsx            # image logo (white chip on dark)
         └── Icons.jsx           # inline SVG icon set (no icon dependency)
 ```
 
 ## Notes
 
-- **Branding**: the wordmark in `src/components/Logo.jsx` is the two-tone
-  `Flintwire` — "Flint" in brand blue, "wire" in the teal accent, matching the
-  blue-to-teal pairing used by the mark and the scroll progress bar. Colours
-  differ per variant: `brand-600`/`teal-700` on light, `brand-300`/`teal-400` on
-  dark. `teal-700` is the only teal dark enough to stay legible at wordmark size
-  on white.
+- **Branding**: the logo is a single image, `src/assets/flintwire.png`, imported
+  by `src/components/Logo.jsx`. It replaced the earlier hand-drawn SVG mark and
+  two-tone text wordmark. The artwork is blue (`#1050f0`) with dark navy
+  (`#101030`) lettering on transparency, so the navbar sets it straight on the
+  page, while the `variant="light"` used in the footer sets it on a white
+  rounded chip — without that the navy lettering would vanish against
+  `ink-950`. Swap in a replacement at the same path to change the logo.
+- **Logo asset**: the source PNG was 1774×887 with a wide transparent margin.
+  The committed file is pre-cropped and downscaled to 720×194 (≈3.7:1), which
+  still covers the largest rendered size (2.75rem tall, ~163px wide) at 4x —
+  292 KB down to 90 KB. Keep a replacement near that ratio, or update the
+  intrinsic size constants at the top of `Logo.jsx`.
 - **Company name**: since the visible wordmark is just "Flintwire", the complete
   name (`Flintwire Technologies`) is carried by the page title, `og:` tags,
   footer copyright and blurb, structured data, the "Why Flintwire Technologies"
   eyebrow, and the header home link's accessible name.
-- **Naming**: the project folder and the GitHub repository are still named
-  `braveedge` from before the rebrand. Renaming them is safe — the site itself
-  does not depend on either name.
+- **Naming**: the project folder and the GitHub repository are both `flintwire`,
+  matching the brand. The site does not depend on the name, so it can be renamed
+  again freely.
 - **Header layout**: the inline nav appears at `lg` (1024px+), with the
   redundant "Product access" shortcut only at `xl`. Below `lg` everything moves
   into the hamburger menu.
