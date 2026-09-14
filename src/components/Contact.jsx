@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Icon from './Icons.jsx';
 import Reveal from './Reveal.jsx';
 import { company, contact } from '../data/site.js';
+import { track } from '../lib/analytics.js';
 
 /**
  * Static-site friendly contact form.
@@ -19,14 +20,24 @@ const details = [
   { icon: 'pin', label: 'Where we work', value: company.location, href: null },
 ];
 
-export default function Contact() {
+export default function Contact({ draft }) {
   const [form, setForm] = useState({ name: '', email: '', company: '', process: '' });
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+  const [fromCalculator, setFromCalculator] = useState(false);
+
+  // Pick up a draft handed over by the ROI calculator.
+  useEffect(() => {
+    if (!draft?.text) return;
+    setForm((prev) => ({ ...prev, process: draft.text }));
+    setStatus('idle');
+    setFromCalculator(true);
+  }, [draft]);
 
   const update = (field) => (event) => setForm((prev) => ({ ...prev, [field]: event.target.value }));
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    track('contact_form_submitted', { from_calculator: fromCalculator });
 
     if (!endpoint) {
       const subject = encodeURIComponent(`Automation enquiry — ${form.company || form.name}`);
@@ -109,6 +120,12 @@ export default function Contact() {
               className="rounded-3xl border border-ink-900/10 bg-white p-6 shadow-lift sm:p-8"
               noValidate={false}
             >
+              {fromCalculator && status !== 'sent' && (
+                <p className="mb-6 flex items-start gap-2.5 rounded-xl bg-brand-50 px-4 py-3 text-[0.8125rem] leading-relaxed text-brand-700">
+                  <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={2.6} />
+                  Your estimate has been added below — just add your details and send.
+                </p>
+              )}
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <label className={labelClass} htmlFor="name">

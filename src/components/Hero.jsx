@@ -1,6 +1,7 @@
 import Icon from './Icons.jsx';
 import Reveal from './Reveal.jsx';
 import { hero } from '../data/site.js';
+import { track } from '../lib/analytics.js';
 
 const nodes = [
   {
@@ -92,7 +93,11 @@ export default function Hero() {
 
             <Reveal delay={200}>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <a href={hero.primaryCta.href} className="btn-accent btn-lg">
+                <a
+                  href={hero.primaryCta.href}
+                  onClick={() => track('cta_clicked', { location: 'hero' })}
+                  className="btn-accent btn-lg"
+                >
                   {hero.primaryCta.label}
                   <Icon name="arrowRight" className="h-4 w-4" strokeWidth={2} />
                 </a>

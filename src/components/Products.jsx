@@ -1,6 +1,7 @@
 import Icon from './Icons.jsx';
 import Reveal from './Reveal.jsx';
 import { products } from '../data/site.js';
+import { track } from '../lib/analytics.js';
 
 /**
  * Product access links. Cards are driven by the `products` array in
@@ -85,6 +86,7 @@ export default function Products() {
                             href={product.url}
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={() => track('product_access_clicked', { product: product.name })}
                             className="mt-5 inline-flex items-center justify-between gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-ink-900 transition group-hover:bg-brand-50"
                           >
                             Open {product.name}

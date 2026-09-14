@@ -1,6 +1,7 @@
 import Icon from './Icons.jsx';
 import Reveal from './Reveal.jsx';
 import { company } from '../data/site.js';
+import { track } from '../lib/analytics.js';
 
 export default function CTA() {
   return (
@@ -23,7 +24,11 @@ export default function CTA() {
               </p>
 
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <a href="#contact" className="btn-accent btn-lg w-full sm:w-auto">
+                <a
+                  href="#contact"
+                  onClick={() => track('cta_clicked', { location: 'closing' })}
+                  className="btn-accent btn-lg w-full sm:w-auto"
+                >
                   Start a conversation
                   <Icon name="arrowRight" className="h-4 w-4" strokeWidth={2} />
                 </a>

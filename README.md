@@ -27,7 +27,7 @@ Almost everything lives in **one file**: `src/data/site.js`.
 
 | What you want to change | Where |
 | --- | --- |
-| Company name, email, phone, location, domain | `company` |
+| Company name, email, phone, location, domain, currency | `company` |
 | Navbar links | `nav` |
 | Hero headline, subtitle, buttons | `hero` |
 | The four statements under the hero | `valueProps` |
@@ -35,6 +35,8 @@ Almost everything lives in **one file**: `src/data/site.js`.
 | Product access links | `products` |
 | The four process steps | `process` |
 | "Why us" points | `differentiators` |
+| ROI calculator copy, defaults and assumptions | `roi` |
+| FAQ questions and answers | `faqs` |
 | Contact copy | `contact` |
 | Footer copy and link columns | `footer` |
 
@@ -67,13 +69,36 @@ export const products = [
 
 ---
 
+## ROI calculator
+
+`#calculator` asks visitors for three numbers — people, weekly repetitive hours
+per person, and fully-loaded hourly cost — and estimates the hours and money
+that automation could recover.
+
+Everything is calculated in the browser; nothing is sent anywhere until the
+visitor presses **Send me this estimate**, which drops the figures into the
+contact form for them.
+
+The assumptions live in `roi.assumptions` in `src/data/site.js`:
+
+| Setting | Default | Meaning |
+| --- | --- | --- |
+| `automatableShare` | `0.7` | Share of the time entered assumed automatable |
+| `workingWeeks` | `46` | Paid weeks per year (allows for holidays) |
+| `hoursPerWeek` | `40` | Used to express savings as "weeks freed" |
+
+The displayed estimate deliberately states these assumptions next to the result,
+so a visitor is never shown a number without its basis.
+
+---
+
 ## Contact form
 
 The form works with **zero configuration**: with no backend set, submitting it
 opens the visitor's email client with the enquiry pre-filled.
 
-To collect submissions server-side instead, create a `.env` file
-(see `.env.example`) with an endpoint that accepts a JSON `POST`:
+To collect submissions server-side instead, set `VITE_CONTACT_ENDPOINT` (see
+`.env.example`) to an endpoint accepting a JSON `POST`:
 
 ```
 VITE_CONTACT_ENDPOINT=https://your-form-endpoint.example/submit
@@ -84,16 +109,77 @@ function or automation webhook (for example a Zapier/Make catch hook) works.
 
 ---
 
+## Analytics
+
+Analytics is **off by default** and no third-party script is loaded until you
+opt in.
+
+```bash
+# .env
+VITE_ANALYTICS_PROVIDER=simple
+```
+
+`simple` injects the Simple Analytics script, which is cookieless and needs no
+cookie banner. It identifies your site by hostname — there is no key to copy, but
+you do need the domain registered in their dashboard. If your domain differs from
+`company.url`, also set `VITE_SITE_URL`.
+
+For any other provider, set `VITE_ANALYTICS_SCRIPT_SRC` to the script URL from
+their dashboard (and `VITE_ANALYTICS_DOMAIN` if they need a `data-domain`).
+
+### Tracked events
+
+Custom events are fired through `src/lib/analytics.js`, which dispatches to
+whichever provider global is present and is a safe no-op when nothing is
+configured:
+
+| Event | Fires when |
+| --- | --- |
+| `cta_clicked` | Hero or closing call-to-action is clicked |
+| `product_access_clicked` | Someone opens a product access link |
+| `roi_estimate_requested` | Someone sends the calculator estimate to the form |
+| `contact_form_submitted` | Contact form is submitted |
+
+These tell you whether the site is actually generating enquiries, not just
+traffic.
+
+---
+
+## What the build generates
+
+`plugins/seo.js` runs at build time and generates everything from
+`src/data/site.js`, so the visible page and its metadata cannot drift apart:
+
+- **`sitemap.xml`** for the deployed domain (also referenced by
+  `public/robots.txt`).
+- **`404.html`** — a `noindex` copy of the page. Static hosts such as GitHub
+  Pages serve this for unknown paths, so mistyped URLs still land on the site.
+- **Structured data** injected into the HTML: `Organization`, `WebSite` and
+  `FAQPage` JSON-LD, including an `Organization.knowsAbout` list built from your
+  services.
+
+Notes:
+
+- A placeholder phone number is automatically **excluded** from structured data
+  until you set a real one in `company.phone`.
+- Google limited FAQ rich results to mostly government and health sites, so
+  treat the `FAQPage` markup as a correctness and discoverability win rather
+  than a guaranteed rich snippet. The FAQ content itself helps regardless.
+- Set `VITE_SITE_URL` and the build rewrites the `canonical`/`og:url` tags in
+  `index.html` to match.
+
+---
+
 ## Before going live
 
-- [ ] Set the real domain in `index.html` (`canonical`, `og:url`) and in
-      `public/robots.txt`. They currently point at `https://braveedge.tech/`.
-- [ ] Update `company.email` / `company.phone` in `src/data/site.js` — the
-      placeholders are `hello@braveedge.tech` and `+1 (000) 000-0000`.
+- [ ] Set the real domain: `VITE_SITE_URL`, or edit `company.url` plus the
+      `canonical`/`og:url` tags in `index.html`, and `public/robots.txt`.
+- [ ] Update `company.email` and `company.phone` in `src/data/site.js` — the
+      placeholders are `hello@braveedge.tech` and `+1 (000) 000-0000`. A real
+      phone number is added to structured data automatically.
 - [ ] Add a social share image: drop a 1200×630 `og.png` into `public/` and add
       `<meta property="og:image" content="/og.png" />` to `index.html`.
-- [ ] Add a `sitemap.xml` in `public/` (single page, so it is one URL).
-- [ ] Optional: add analytics, and a privacy note if you add tracking.
+- [ ] Decide on analytics (see above) and add a privacy note if you enable it.
 
 ---
 
@@ -102,8 +188,8 @@ function or automation webhook (for example a Zapier/Make catch hook) works.
 `dist/` is fully static — no server, no runtime, no routing rules needed
 (the site is one page with anchor links).
 
-- **GitHub Pages** — publish the `dist/` folder to the `gh-pages` branch, or via
-  a GitHub Actions workflow.
+- **GitHub Pages** — publish `dist/` to the `gh-pages` branch, or via a GitHub
+  Actions workflow. The generated `404.html` handles unknown paths.
 - **Netlify / Cloudflare Pages / Vercel** — build command `npm run build`,
   publish directory `dist`.
 - **Any web host or S3 bucket** — upload `dist/`.
@@ -116,14 +202,17 @@ Whatever you choose, make sure the site is served over HTTPS.
 
 ```
 braveedge/
-├── index.html              # HTML shell, fonts, SEO meta
+├── index.html              # HTML shell, SEO meta (structured data is injected at build)
+├── vite.config.js          # Vite + SEO plugin wiring
 ├── tailwind.config.js      # brand colours, fonts, shadows, animations
+├── plugins/seo.js          # generates sitemap, 404.html, JSON-LD, analytics tags
 ├── public/                 # favicon, robots.txt (copied as-is to dist/)
 └── src/
-    ├── main.jsx            # entry point
-    ├── App.jsx             # section order
+    ├── main.jsx            # entry point + self-hosted font imports
+    ├── App.jsx             # section order + contact-form draft state
     ├── index.css           # Tailwind layers, button/card/eyebrow classes
-    ├── data/site.js        # ← all page content and product links
+    ├── data/site.js        # ← all page content, product links, FAQ, ROI config
+    ├── lib/analytics.js    # provider-agnostic event tracking
     └── components/
         ├── Navbar.jsx          # sticky header + mobile menu
         ├── Hero.jsx            # headline + animated workflow mock
@@ -132,6 +221,8 @@ braveedge/
         ├── Products.jsx        # product access links
         ├── Process.jsx         # four-step delivery process
         ├── WhyUs.jsx           # differentiators + before/after panel
+        ├── RoiCalculator.jsx   # interactive savings estimator
+        ├── Faq.jsx             # accordion (native <details>)
         ├── CTA.jsx             # closing call to action
         ├── Contact.jsx         # contact details + form
         ├── Footer.jsx
@@ -145,10 +236,10 @@ braveedge/
 
 ## Notes
 
-- **Typography** loads Inter and Plus Jakarta Sans from Google Fonts. To go fully
-  self-hosted, install the `@fontsource` packages and import them in
-  `src/main.jsx`, then remove the `<link>` tags from `index.html`.
+- **Typography** is self-hosted via `@fontsource` (imported in `src/main.jsx`), so
+  the page makes no third-party requests and needs no cookie banner.
 - **Accessibility**: keyboard focus rings, semantic landmarks, `aria` labels on
-  toggles, and `prefers-reduced-motion` support are built in.
-- **No tests yet.** `npm run build` is the main check; the built output lives in
+  toggles, and `prefers-reduced-motion` support are built in. The FAQ uses native
+  `<details>`/`<summary>`, so it works without JavaScript.
+- **No test suite.** `npm run build` is the main check; the built output lives in
   `dist/`.

@@ -16,6 +16,11 @@ export const company = {
   location: 'Remote-first · Serving clients worldwide',
   // Update this once the production domain is live.
   url: 'https://braveedge.tech',
+  // Used by the ROI calculator to format money.
+  currency: 'USD',
+  // Shown as the organization description in structured data.
+  schemaDescription:
+    'Automation agency building workflow automation, AI assistants, systems integrations and internal tools for growing teams.',
 };
 
 export const nav = [
@@ -23,6 +28,7 @@ export const nav = [
   { label: 'Products', href: '#products' },
   { label: 'How we work', href: '#process' },
   { label: 'Why us', href: '#why' },
+  { label: 'FAQ', href: '#faq' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -170,6 +176,78 @@ export const differentiators = [
     title: 'Security-conscious by default',
     description:
       'Least-privilege access, secrets handled properly, and your data staying inside systems you control.',
+  },
+];
+
+/**
+ * ROI CALCULATOR
+ * ---------------------------------------------------------------------------
+ * Every figure the calculator shows is derived from the visitor's own inputs.
+ * `assumptions` are deliberately conservative — adjust them here if you want
+ * to make the estimate more or less bullish.
+ */
+export const roi = {
+  eyebrow: 'Estimate',
+  title: 'What is the manual work actually costing you?',
+  description:
+    'Move the sliders to match your team. We assume only part of repetitive work can be automated, so treat the result as a floor rather than a promise.',
+  assumptions: {
+    // Share of the repetitive time you enter that we would expect to automate.
+    automatableShare: 0.7,
+    // Paid working weeks per year (allows for holidays and leave).
+    workingWeeks: 46,
+    // Full-time hours per week, used to express savings as "weeks freed".
+    hoursPerWeek: 40,
+  },
+  defaults: { people: 3, hours: 8, cost: 35 },
+  limits: {
+    people: { min: 1, max: 25, step: 1 },
+    hours: { min: 1, max: 40, step: 1 },
+    cost: { min: 10, max: 150, step: 5 },
+  },
+};
+
+/**
+ * FAQ
+ * ---------------------------------------------------------------------------
+ * Rendered as an accordion in the page AND used to generate FAQPage
+ * structured data at build time (see plugins/seo.js), so edit it here only.
+ */
+export const faqs = [
+  {
+    question: 'Who owns the automations you build?',
+    answer:
+      'You do. Code, workflow definitions, documentation and credentials are handed over as part of the project, not held on our platform. If you ever want to take it in-house or to another partner, nothing is locked away.',
+  },
+  {
+    question: 'Do we need to replace the tools we already use?',
+    answer:
+      'No. We deliberately build on top of the systems you already run — your CRM, finance stack, helpdesk and spreadsheets. The goal is to connect what you have, not to trigger a migration project.',
+  },
+  {
+    question: 'How do you handle our data and security?',
+    answer:
+      'We work with least-privilege access, keep secrets in a managed store rather than in code or chat, and avoid copying your data into third-party systems it does not need to be in. Where an integration touches sensitive records, we document exactly which fields are read and written.',
+  },
+  {
+    question: 'What does a project cost?',
+    answer:
+      'Every engagement is quoted as a fixed price against a fixed scope, agreed after the discovery session and before any build work starts. You will not receive an open-ended hourly estimate from us.',
+  },
+  {
+    question: 'How long before we see something working?',
+    answer:
+      'Most projects reach a useful first version within two to four weeks of kickoff. We build in short cycles against your real data so you can judge the output early, rather than waiting for a single large delivery at the end.',
+  },
+  {
+    question: 'What happens when a process changes or something breaks?',
+    answer:
+      'Automations are software and need maintenance, so we offer ongoing support: monitoring, fixes and incremental changes as your processes evolve. You can also take the handover documentation and run it yourself — both are fine.',
+  },
+  {
+    question: 'Will this replace our team?',
+    answer:
+      'In our experience it replaces the work, not the people. The usual outcome is that the same team handles more volume with fewer errors, and spends its time on the judgement calls that were previously squeezed out by admin.',
   },
 ];
 

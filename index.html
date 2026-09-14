@@ -22,16 +22,17 @@
     <meta property="og:site_name" content="BraveEdge Technologies" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Update these once the production domain is live. -->
+    <!--
+      Update these once the production domain is live — or set VITE_SITE_URL in
+      .env and the build will rewrite them automatically.
+    -->
     <link rel="canonical" href="https://braveedge.tech/" />
     <meta property="og:url" content="https://braveedge.tech/" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <!--
+      Fonts are self-hosted via @fontsource (imported in src/main.jsx), so the
+      page makes no third-party requests. No Google Fonts link required.
+    -->
   </head>
   <body>
     <div id="root"></div>
